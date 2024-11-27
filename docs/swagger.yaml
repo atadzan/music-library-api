@@ -1,0 +1,11 @@
+basePath: /
+host: localhost
+info:
+  contact: {}
+  description: Simple music library API with CRUD functionality
+  title: Music Library API
+  version: "1.0"
+paths: {}
+schemes:
+- http
+swagger: "2.0"

@@ -1,0 +1,15 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Simple music library API with CRUD functionality",
+        "title": "Music Library API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost",
+    "basePath": "/",
+    "paths": {}
+}
