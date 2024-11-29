@@ -25,14 +25,14 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	library := app.Group("/library")
 	{
-		library.GET("/info", getLibraryInfo)
+		library.GET("/info", h.getLibraryInfo)
 
 		songs := library.Group("songs")
 		{
-			songs.GET("/:song_id/lyrics", getSongLyrics)
-			songs.POST("/", addSongToLibrary)
-			songs.DELETE("/:song_id", deleteSong)
-			songs.PATCH("/:song_id", updateSong)
+			songs.GET("/:song_id/lyrics", h.getSongLyrics)
+			songs.POST("/", h.addSongToLibrary)
+			songs.DELETE("/:song_id", h.deleteSong)
+			songs.PATCH("/:song_id", h.updateSong)
 		}
 	}
 	return app

@@ -6,3 +6,5 @@ dependencies-up:
 	docker-compose -f ./deployment/dependencies.yaml up -d
 generate-docs:
 	rm -rf docs && swag init -d ./cmd -o ./docs
+run-api:
+	go run cmd/main.go --config $(path)

@@ -29,3 +29,17 @@ type UpdateSongParams struct {
 	Text        *string `json:"text"`
 	Link        *string `json:"link"`
 }
+
+type GetSongLyricsParams struct {
+	SongId string `path:"song_id"`
+	Page   int    `form:"page"`
+	Limit  int    `form:"limit"`
+}
+
+type SongLyrics struct {
+	Lyrics string `json:"lyrics"`
+}
+
+type SongId struct {
+	SongId int `path:"song_id"`
+}
