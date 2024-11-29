@@ -26,21 +26,21 @@ func NewService(repo repository.Repository) Service {
 }
 
 func (s *service) LibraryInfo(ctx context.Context, info models.LibraryInfoParams) (models.LibraryInfo, error) {
-	return models.LibraryInfo{}, nil
+	return s.repo.LibraryInfo(ctx, info)
 }
 
 func (s *service) GetSongLyrics(ctx context.Context, param models.GetSongLyricsParams) (models.SongLyrics, error) {
-	return models.SongLyrics{}, nil
+	return s.repo.GetSongLyrics(ctx, param)
 }
 
 func (s *service) AddSongToLibrary(ctx context.Context, param models.AddSongParams) (string, error) {
-	return "", nil
+	return s.repo.AddSongToLibrary(ctx, param)
 }
 
 func (s *service) UpdateSong(ctx context.Context, params models.UpdateSongParams) (string, error) {
-	return "", nil
+	return s.repo.UpdateSong(ctx, params)
 }
 
 func (s *service) DeleteSong(ctx context.Context, songId int) (string, error) {
-	return "", nil
+	return s.repo.DeleteSong(ctx, songId)
 }

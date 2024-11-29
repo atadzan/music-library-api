@@ -14,15 +14,20 @@ type Server struct {
 	httpServer *http.Server
 }
 
-// Run - runs server
-func (s *Server) Run(port string, handler http.Handler) error {
-	s.httpServer = &http.Server{
-		Addr:              port,
-		Handler:           handler,
-		MaxHeaderBytes:    5 << 20,
-		ReadHeaderTimeout: 10 * time.Second,
-		WriteTimeout:      10 * time.Second,
+func New(port string, handler http.Handler) *Server {
+	return &Server{
+		httpServer: &http.Server{
+			Addr:              port,
+			Handler:           handler,
+			MaxHeaderBytes:    5 << 20,
+			ReadHeaderTimeout: 10 * time.Second,
+			WriteTimeout:      10 * time.Second,
+		},
 	}
+}
+
+// Run - runs server
+func (s *Server) Run() error {
 	if err := s.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		return err
 	}

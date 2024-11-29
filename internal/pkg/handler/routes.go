@@ -6,16 +6,6 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-/*
-
-* Получение данных библиотеки с фильтрацией по всем полям и пагинацией
-* Получение текста песни с пагинацией по куплетам
-* Удаление песни
-* Изменение данных песни
-* Добавление новой песни в формате JSON
-
- */
-
 func (h *Handler) InitRoutes() *gin.Engine {
 	app := gin.Default()
 	app.RedirectTrailingSlash = true

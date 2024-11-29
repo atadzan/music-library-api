@@ -10,7 +10,7 @@ import (
 )
 
 type AppConfig struct {
-	HTTPPort   int    `mapstructure:"HTTP"`
+	HTTPPort   string `mapstructure:"HTTP"`
 	DbUsername string `mapstructure:"DB_USERNAME"`
 	DbPassword string `mapstructure:"DB_PASSWORD"`
 	DbName     string `mapstructure:"DB_NAME"`

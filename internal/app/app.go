@@ -5,10 +5,13 @@ import (
 	"database/sql"
 	"fmt"
 
+	"log"
+
+	srv "github.com/atadzan/music-library-api/internal/app/server"
+	"github.com/atadzan/music-library-api/internal/pkg/handler"
+	"github.com/atadzan/music-library-api/internal/pkg/services"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
-
-	"log"
 
 	"github.com/atadzan/music-library-api/internal/config"
 	"github.com/atadzan/music-library-api/internal/pkg/repository"
@@ -16,25 +19,14 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 )
 
-/* Init TODO
-    1. Обогащенную информацию положить в БД postgres
-		(структура БД должна быть создана путем миграций при старте сервиса)
-	2. Покрыть код debug- и info-логами
-	3. Вынести конфигурационные данные в .env-файл
-	4. Сгенерировать сваггер на реализованное АПИ
-*/
-
 func Init() {
 	ctx := context.Background()
-	// TODO init config from.env file
-	// TODO db init
-	// TODO apply migration
 	appCfg, err := config.LoadConfig()
 	if err != nil {
 		log.Println(ctx, "can't load config. Err: ", err)
 		return
 	}
-	log.Println(appCfg)
+
 	dbPool, err := repository.NewPostgresPool(ctx, repository.Params{
 		Username: appCfg.DbUsername,
 		Password: appCfg.DbPassword,
@@ -69,14 +61,17 @@ func Init() {
 		log.Println(ctx, "can't init migration. Err: ", err)
 		return
 	}
-	if err := m.Up(); err != nil {
+	if err = m.Up(); err != nil {
 		log.Println(ctx, "can't apply migration. Err: ", err)
-		return
 	}
 
-	//if err = srv.Run(":"+appConfig.HTTP.Port, handlers.InitRoutes()); err != nil {
-	//	errorx.PrintDetailedError(err)
-	//	return err
-	//}
+	repo := repository.New(dbPool)
+	svc := services.NewService(repo)
+	handlerx := handler.New(svc)
+	routes := handlerx.InitRoutes()
+	srv := srv.New(appCfg.HTTPPort, routes)
 
+	if err = srv.Run(); err != nil {
+		log.Fatalln("can't run server. Err:", err)
+	}
 }
